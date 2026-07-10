@@ -1,0 +1,54 @@
+{
+  "name": "Westridge Medical Healthcare",
+  "short_name": "Westridge Medical",
+  "description": "General physician, diagnostic laboratory, and Westridge Plus Pharmacy on Main GT Road, Rawalpindi.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#052268",
+  "orientation": "portrait-primary",
+  "shortcuts": [
+    {
+      "name": "Book an Appointment",
+      "short_name": "Book",
+      "description": "Book an appointment with Westridge Medical Healthcare",
+      "url": "/appointments",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "AI Health Assistant",
+      "short_name": "AI Assistant",
+      "description": "Get general guidance and urgency triage",
+      "url": "/ai-health-assistant",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Phone, WhatsApp, email, and location",
+      "url": "/contact",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

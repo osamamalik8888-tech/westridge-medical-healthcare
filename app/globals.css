@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: dark: utilities apply inside .dark rather than
+   only following the OS-level prefers-color-scheme media query, since the
+   brief asks for a manual toggle, not just OS-following. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/*
+  Color tokens below were NOT hand-picked. They were sampled directly from
+  WMH_LOGO.png (navy #052268, red #FC0100) and expanded into full tonal
+  scales programmatically. navy-900 and red-500 are the exact brand pixels;
+  everything else is a mathematical tint/shade of those two anchors.
+*/
+@theme {
+  --color-navy-50: #f6f7fa;
+  --color-navy-100: #ebedf3;
+  --color-navy-200: #d2d7e4;
+  --color-navy-300: #afb8cf;
+  --color-navy-400: #8290b4;
+  --color-navy-500: #556998;
+  --color-navy-600: #2d4580;
+  --color-navy-700: #142f71;
+  --color-navy-800: #051f60;
+  --color-navy-900: #052268; /* exact logo navy */
+  --color-navy-950: #031747;
+
+  --color-red-50: #fff1f1;
+  --color-red-100: #ffdbdb;
+  --color-red-300: #fe8d8c;
+  --color-red-400: #fd2f2e;
+  --color-red-500: #fc0100; /* exact logo red */
+  --color-red-600: #e50100;
+  --color-red-700: #c50100;
+
+  --color-mist: #f7f8fb;
+  --color-line: #e3e7ee;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-source-serif), ui-serif, Georgia, serif;
+
+  --animate-ecg-scroll: ecg-scroll 8s linear infinite;
+  --animate-pulse-dot: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow-pulse: glow-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes ecg-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(252, 1, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(252, 1, 0, 0);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Accessibility: user-toggleable large-text mode. Scales the root rem
+     base rather than individual font-size utilities, so it cascades
+     through Tailwind's whole type scale (and spacing that uses rem)
+     automatically, instead of needing a dark:-style variant on every
+     text-* class across the project. */
+  html.text-lg-mode {
+    font-size: 118.75%;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::selection {
+    background-color: var(--color-red-100);
+    color: var(--color-navy-900);
+  }
+
+  /* Visible keyboard focus everywhere, layered on top of Tailwind's reset */
+  :focus-visible {
+    outline: 2px solid var(--color-red-500);
+    outline-offset: 2px;
+  }
+}
+
+/* Quality floor: respect the OS-level reduced-motion preference site-wide,
+   rather than hoping every individual animation remembers to check it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: someone printing directions, hours, or an appointment summary
+   doesn't need the nav, footer, floating WhatsApp button, or a navy page
+   background burning through their printer's ink. Link URLs are spelled
+   out since a printed page can't be clicked. */
+@media print {
+  header,
+  footer,
+  [aria-label="Message Westridge Medical Healthcare on WhatsApp"],
+  iframe {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  a[href^="http"]::after,
+  a[href^="tel:"]::after,
+  a[href^="mailto:"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+}
+
